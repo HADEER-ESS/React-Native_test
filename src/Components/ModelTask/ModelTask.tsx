@@ -16,7 +16,7 @@ const ModelTask = (props: { openModelState: boolean, closeModelFun: React.Dispat
             setErrorMessage("Please Add a task")
         } else {
             setTaskItem('jhkj')
-            // setTaskType('')
+            setTaskType('')
             props.closeModelFun(false)
             props.tasksState(todo.getTodoItem())
             // console.log("TODO ", todo.getTodoItem());
