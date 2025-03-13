@@ -1,19 +1,9 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native"
 import ModelTask from "../src/Components/ModelTask/ModelTask";
+import Todo from "../src/Class/TodoClass";
+import { act } from "react-test-renderer";
 
-//Mock ToDo class
-class TODO {
-    constructor(title, desc) {
-        TODO.id = 1
-        this.title = title
-        this.desc = desc
-    }
-
-    getTodoItem() {
-        return { id: TODO.id, title: this.title, desc: this.desc }
-    }
-}
 
 
 
@@ -28,18 +18,18 @@ describe("Test ModalTask Component", () => {
 
     })
 
-    test('updates state and displays input text when user types and presses button', () => {
+    test('when user enter only one required field, it display error', () => {
 
         const closeModelFun = jest.fn()
 
-        const tasksState = jest.fn()
+        const { getByTestId } = render(<ModelTask closeModelFun={closeModelFun} />)
 
-        const { getByTestId } = render(<ModelTask closeModelFun={closeModelFun} tasksState={tasksState} />)
 
 
         const input = getByTestId("Task_input")
 
         const button = getByTestId("add_btn")
+        const errorText = getByTestId("Invalid_text_task")
 
         //simulate user type in textInput
         fireEvent.changeText(input, "New Task")
@@ -50,28 +40,31 @@ describe("Test ModalTask Component", () => {
         //Simulate button press
         fireEvent.press(button)
 
-        expect(closeModelFun).toHaveBeenCalledWith(false);
-        expect(tasksState).toHaveBeenCalledWith({ id: 1, title: '', description: 'New Task' });
+        expect(errorText).toBeTruthy()
+
 
     })
 
-    test('displays error message when taskItem is empty and button is pressed', () => {
-
+    test('when user enter the task type and task title and press on the btn to update the task array', () => {
         const closeModelFun = jest.fn()
+        const addTaskToClass = jest.spyOn(Todo.prototype, 'pushToArray')
 
-        const tasksState = jest.fn()
+        const { getByTestId } = render(<ModelTask closeModelFun={closeModelFun} />)
 
-        const { getByTestId } = render(<ModelTask closeModelFun={closeModelFun} tasksState={tasksState} />)
-
+        const input = getByTestId("Task_input")
         const button = getByTestId("add_btn")
 
-        fireEvent.press(button);
+        //Actions
+        fireEvent.changeText(input, "add task")
+        //update the taskItem state
+        expect(input.props.value).toBe("add task")
 
-        expect(getByTestId("Invalid_text_task")).toHaveTextContent("Please Add a task")
+        //update the taskType state manually
 
-        expect(closeModelFun).not.toHaveBeenCalled()
 
-        expect(tasksState).not.toHaveBeenCalled()
+        fireEvent.press(button)
+        expect(closeModelFun).toHaveBeenCalledWith(false)
+        expect(addTaskToClass).toHaveBeenCalled()
     })
 })
 

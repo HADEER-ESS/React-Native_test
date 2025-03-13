@@ -1,25 +1,31 @@
 import React, { useState } from 'react'
 import { FlatList, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Todo from '../../Class/TodoClass';
-import { TodoItem } from '../../Types/TodoItem';
 import categoryData from '../../Data/CategoryData';
 import CategoryCard from '../categoryCard/CategoryCard';
 
-const ModelTask = (props: { openModelState: boolean, closeModelFun: React.Dispatch<React.SetStateAction<boolean>>, tasksState: (item: TodoItem) => void }) => {
+type TodoItem = {
+    id: number,
+    title: string,
+    description: string
+}
+
+const ModelTask = (props: { openModelState: boolean, closeModelFun: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const [taskItem, setTaskItem] = useState<string>('')
     const [taskType, setTaskType] = useState<string>('')
     let [errorMessage, setErrorMessage] = useState<string>("")
-    let todo = new Todo(taskType, taskItem)
+    let todoService = Todo.getInstance()
 
     const handleModelTask = (): void => {
-        if (taskItem.length == 0) {
-            setErrorMessage("Please Add a task")
+        if (taskItem.length === 0) {
+            setErrorMessage("Please Add the task")
         } else {
-            setTaskItem('jhkj')
+            setTaskItem('')
             setTaskType('')
             props.closeModelFun(false)
-            props.tasksState(todo.getTodoItem())
-            // console.log("TODO ", todo.getTodoItem());
+            let item: TodoItem = { id: todoService.taskCount() + 1, title: taskType, description: taskItem }
+            todoService.pushToArray(item)
+
         }
     }
 
