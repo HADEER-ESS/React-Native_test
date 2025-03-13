@@ -1,27 +1,44 @@
 import "react-native";
 import React from "react";
 import CategoryCard from "../src/Components/categoryCard/CategoryCard";
-import {render} from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 
 
+describe("<CategoryCard />", () => {
+    test("Display the component", () => {
+
+        let item = {
+            type: "Urgent",
+            color: 'red'
+        }
+
+        let taskType = "Important"
+
+        let addTaskFun = jest.fn()
+
+        const tree = render(<CategoryCard category={item} getTaskType={addTaskFun} selectedItem={taskType} />)
 
 
-test("Display the component" , () => {
+        //toMatchInlineSnapshot cause this error ==> Jest: Inline Snapshots are not supported when using Prettier 3.0.0 or above
+        //need to downgrade Prettier till fix this issue in upgrade
 
-    let item  = {
-        type : "Urgent",
-        color:'red'
-    }
+        expect(tree).toMatchSnapshot()
+    })
 
-    let taskType = "Important"
+    test("item Clicked and select one task category", () => {
+        let addTaskFun = jest.fn()
+        let item = {
+            type: "Urgent",
+            color: 'red'
+        }
 
-    let addTaskFun = jest.mock()
+        const { getByTestId } = render(<CategoryCard category={item} getTaskType={addTaskFun} />)
 
-    const tree = render(<CategoryCard  category={item} getTaskType={addTaskFun} selectedItem={taskType}/>)
+        const pressable = getByTestId('task_category_click')
 
+        fireEvent.press(pressable)
+        expect(addTaskFun).toHaveBeenCalled()
 
-    //toMatchInlineSnapshot cause this error ==> Jest: Inline Snapshots are not supported when using Prettier 3.0.0 or above
-    //need to downgrade Prettier till fix this issue in upgrade
-
-    expect(tree).toMatchSnapshot()
+    })
 })
+
