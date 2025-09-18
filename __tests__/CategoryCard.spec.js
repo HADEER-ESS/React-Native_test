@@ -34,7 +34,7 @@ describe("<CategoryCard />", () => {
 
         const { getByTestId } = render(<CategoryCard category={item} getTaskType={addTaskFun} />)
 
-        const pressable = getByTestId('task_category_click')
+        const pressable = getByTestId('model.categoryInteract.touchableOpacity')
 
         fireEvent.press(pressable)
         expect(addTaskFun).toHaveBeenCalled()

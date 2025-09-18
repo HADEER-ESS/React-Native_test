@@ -161,15 +161,20 @@ exports[`Test ModalTask Component Default Model Task rendering 1`] = `
                   "paddingHorizontal": 4,
                 }
               }
+              testID="task_category_click"
             >
               <View
                 style={
-                  {
-                    "backgroundColor": "red",
-                    "borderRadius": 20,
-                    "height": 16,
-                    "width": 16,
-                  }
+                  [
+                    {
+                      "borderRadius": 20,
+                      "height": 16,
+                      "width": 16,
+                    },
+                    {
+                      "backgroundColor": "red",
+                    },
+                  ]
                 }
               />
               <Text
@@ -237,15 +242,20 @@ exports[`Test ModalTask Component Default Model Task rendering 1`] = `
                   "paddingHorizontal": 4,
                 }
               }
+              testID="task_category_click"
             >
               <View
                 style={
-                  {
-                    "backgroundColor": "green",
-                    "borderRadius": 20,
-                    "height": 16,
-                    "width": 16,
-                  }
+                  [
+                    {
+                      "borderRadius": 20,
+                      "height": 16,
+                      "width": 16,
+                    },
+                    {
+                      "backgroundColor": "green",
+                    },
+                  ]
                 }
               />
               <Text
@@ -313,15 +323,20 @@ exports[`Test ModalTask Component Default Model Task rendering 1`] = `
                   "paddingHorizontal": 4,
                 }
               }
+              testID="task_category_click"
             >
               <View
                 style={
-                  {
-                    "backgroundColor": "blue",
-                    "borderRadius": 20,
-                    "height": 16,
-                    "width": 16,
-                  }
+                  [
+                    {
+                      "borderRadius": 20,
+                      "height": 16,
+                      "width": 16,
+                    },
+                    {
+                      "backgroundColor": "blue",
+                    },
+                  ]
                 }
               />
               <Text

@@ -7,7 +7,7 @@ const CategoryCard = (props: { selectedItem: string, category: taskCategory, get
     <TouchableOpacity onPress={() => {
       props.getTaskType(props?.category?.type)
     }}
-      testID='task_category_click'
+      testID='model.categoryInteract.touchableOpacity'
       style={[style.cardCategoryContainer, { backgroundColor: props.category.type == props.selectedItem ? "#DFF5FF" : "transparent" }]}
     >
 
